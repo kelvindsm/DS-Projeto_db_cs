@@ -1,0 +1,36 @@
+{% extends "adm/base_adm.html" %}
+
+{% block content %}
+<section class="form-section">
+    <h2>Incluir Novo Setor</h2>
+    <form id="setorForm" method="POST" action="/adm/setor/salvar_incluir">
+        <div class="form-group">
+            <label for="sgl_setor">Sigla do Setor:</label>
+            <input type="text" id="sgl_setor" name="sgl_setor" maxlength="10" required>
+        </div>
+        <div class="form-group">
+            <label for="nme_setor">Nome do Setor:</label>
+            <input type="text" id="nme_setor" name="nme_setor" maxlength="50" required>
+        </div>
+        <div class="form-group">
+            <label for="eml_setor">Email do Setor:</label>
+            <input type="email" id="eml_setor" name="eml_setor" maxlength="50" required>
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <div class="radio-group">
+                <label for="sts_ativo">
+                    <input type="radio" id="sts_ativo" name="sts_setor" value="A" required checked> Ativo
+                    (Disponível para uso)
+                </label>
+                <label for="sts_inativo">
+                    <input type="radio" id="sts_inativo" name="sts_setor" value="I" required> Inativo
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="reset" class="btn btn-secondary">Limpar</button>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+{% endblock %}

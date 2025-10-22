@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Contato</title>
+    <link rel="stylesheet" href="estilo_form.css">
+</head>
+<body>
+<div class="container">
+    <h1>Entre em Contato</h1>
+
+
+    <form onsubmit="mostrar(event)" method="post" enctype="text/plain">
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" name="nome" required>
+
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+
+        <label for="tpoMensagem">Tipo de mensagem</label>
+        <select id="tpoMensagem" name="Tipo">
+            <option value="Atendimento">Atendimento</option>
+            <option value="Elogios">Elogios</option>
+            <option value="Reclamações">Reclamações</option>
+            <option value="Dúvidas">Dúvidas</option>
+        </select>
+
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+
+
+        <button type="submit">Enviar Mensagem</button>
+    </form>
+</div>
+</body>
+</html>
+
+
+<script>
+    function mostrar(event) {
+        // Evita que o formulário seja enviado (recarregue a página)
+        event.preventDefault();
+
+
+        // Recuperar dados do formulário
+        var nome = document.getElementById("nome").value;
+        var email = document.getElementById("email").value;
+        var mensagem = document.getElementById("mensagem").value;
+        var tpoMensagem = document.getElementById("tpoMensagem").value;
+
+
+        // Criar uma string de saída com todos os dados
+        // A sintaxe `${...}` insere o valor da variável na string
+        var saida = `Nome: ${nome}\n\nE-mail: ${email}\nTipo de mensagem:${tpoMensagem}\nMensagem: ${mensagem}`;
+
+
+        // Exibir os dados que foram digitados
+        alert(saida);
+    }
+</script>

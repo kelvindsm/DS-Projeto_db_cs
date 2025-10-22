@@ -1,0 +1,50 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+
+<section class="form-section">
+    <h2>Consultar Locais</h2>
+    <form id="consultarForm" class="consultar-form" action="/adm/locais/roda_consultar" method="POST">
+        <div class="form-group">
+            <label for="nme_local">Nome do local:</label>
+            <input type="text" id="nme_local" name="nme_local" placeholder="Digite o nome do local para filtrar">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</section>
+
+<section class="table-section">
+    <p>Total de registros encontrados: <strong>{{ locais | length }}</strong></p>
+    <div class="table-container">
+        <table id="locaisTable" class="data-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for local in locais %}
+            <tr>
+                <td>{{ local.idt_local }}</td>
+                <td>{{ local.nme_local }}</td>
+                <td>{{ "Ativo" if local.sts_local == 'A' else "Inativo" }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Nenhum setor encontrado.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if filtro_usado %}
+    <div class="filter-footer">
+        <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

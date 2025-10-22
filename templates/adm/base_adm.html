@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Central de Serviços{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo_adm.css') }}">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <h1 class="service-title">Central de Serviços</h1>
+        <div class="user-profile">
+            <span style="font-size: 2em;">&#x1F934;</span>
+            <a href="#" class="user-profile">Perfil de Administrador</a>
+        </div>
+    </div>
+</header>
+<main>
+    {% block content %}
+    <!-- O conteúdo específico de cada página será inserido aqui -->
+    {% endblock %}
+</main>
+<footer>
+    <nav>
+        <a href="/menu_adm">Menu do Administrador</a>
+        <a href="/">Menu Principal</a>
+    </nav>
+    <p>&copy; Central de Serviços. Todos os direitos reservados.</p>
+</footer>
+<script>
+    {% block script %}
+    <!-- O JavaScript entrará aqui -->
+    {% endblock %}
+</script>
+</body>
+</html>
