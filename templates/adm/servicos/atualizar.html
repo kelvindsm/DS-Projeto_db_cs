@@ -1,0 +1,82 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+   <main>
+       <section class="form-section">
+           <h2>Atualizar e Gerenciar Serviços</h2>
+           <form id="atualizarForm" class="consultar-form" action="/adm/serv/roda_atualizar" method="POST">
+               <div class="form-group">
+                   <label for="nme_servico">Nome do Serviço:</label>
+                   <input type="text" id="nme_servico" name="nme_servico" placeholder="Digite o nome do serviço para filtrar">
+               </div>
+               <div class="form-group">
+                   <label for="cod_setor">Setor:</label>
+                   <select id="cod_setor" name="cod_setor">
+                       <option value="">Todos os Setores</option>
+                       {% for setor in setores %}
+                           <option value="{{ setor.idt_setor }}">{{ setor.sgl_setor }} - {{ setor.nme_setor }}</option>
+                       {% endfor %}
+                   </select>
+               </div>
+               <button type="submit" class="btn btn-primary">Buscar</button>
+           </form>
+           <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+       </section>
+
+
+       <section class="table-section">
+           <p>Total de registros encontrados: <strong>{{ servicos | length }}</strong></p>
+           <div class="table-container">
+               <table id="servicosTable" class="data-table">
+                   <thead>
+                       <tr>
+                           <th>ID</th>
+                           <th>Serviço</th>
+                           <th>Setor</th>
+                           <th>Valor</th>
+                           <th>Dias</th>
+                           <th>Status</th>
+                           <th>Ações</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for servico in servicos %}
+                       <tr>
+                           <td>{{ servico.idt_servico }}</td>
+                           <td>{{ servico.nme_servico }}</td>
+                           <td>{{ servico.tt_setor.nme_setor }}</td>
+                           <td>R$ {{ "%.2f"|format(servico.vlr_servico) }}</td>
+                           <td>{{ servico.num_dias_servico }}</td>
+                           <td>{{ "Ativo" if servico.sts_servico == 'A' else "Inativo" }}</td>
+                           <td class="action-buttons">
+                               <button class="btn btn-edit" onclick="window.open('/adm/serv/alterar/{{ servico.idt_servico }}', '_self')">Alterar</button>
+                               <button class="btn btn-delete" onclick="confirmar({{ servico.idt_servico }}, '{{ servico.nme_servico }}')">Excluir</button>
+                           </td>
+                       </tr>
+                       {% else %}
+                       <tr>
+                           <td colspan="7">Nenhum serviço encontrado.</td>
+                       </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+           </div>
+           {% if filtro_usado %}
+           <div class="filter-footer">
+               <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+           </div>
+           {% endif %}
+       </section>
+   </main>
+{% endblock %}
+
+
+{% block script %}
+   function confirmar(idt, nme){
+       retorno = confirm('Confirma a exclusão do serviço: ' + nme + ' ?');
+       if (retorno){
+          window.open('/adm/serv/excluir/' + idt, '_self');
+       }
+   }
+{% endblock %}

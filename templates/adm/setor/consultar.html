@@ -1,0 +1,54 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+
+<section class="form-section">
+    <h2>Consultar Setores</h2>
+    <form id="consultarForm" class="consultar-form" action="/adm/setor/roda_consultar" method="POST">
+        <div class="form-group">
+            <label for="nme_setor">Nome do Setor:</label>
+            <input type="text" id="nme_setor" name="nme_setor" placeholder="Digite o nome do setor para filtrar">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</section>
+
+<section class="table-section">
+    <p>Total de registros encontrados: <strong>{{ setores | length }}</strong></p>
+    <div class="table-container">
+        <table id="setoresTable" class="data-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sigla</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for setor in setores %}
+            <tr>
+                <td>{{ setor.idt_setor }}</td>
+                <td>{{ setor.sgl_setor }}</td>
+                <td>{{ setor.nme_setor }}</td>
+                <td>{{ setor.eml_setor }}</td>
+                <td>{{ "Ativo" if setor.sts_setor == 'A' else "Inativo" }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Nenhum setor encontrado.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if filtro_usado %}
+    <div class="filter-footer">
+        <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

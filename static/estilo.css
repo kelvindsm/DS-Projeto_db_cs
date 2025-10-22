@@ -1,0 +1,142 @@
+/* Estilos globais para o corpo da página e layout geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+}
+
+
+/* Container principal para os cards do menu inicial */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+/* Estilos para o cabeçalho das páginas (título e subtítulo) */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+
+.header h1 {
+    color: #333;
+    font-size: 2.5em;
+}
+
+
+/* Estilo do grid que organiza os cards */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+
+/* Estilos comuns para todos os cards */
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+.card-content {
+    flex-grow: 1;
+}
+
+
+.card-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+
+.card h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.card-header {
+    color: #fff;
+    padding: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+.card-body {
+    padding: 30px 20px;
+}
+
+
+/* Estilos para os botões de opção dentro dos cards de administrador */
+.card-options {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.option-button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+}
+
+
+.option-button:hover {
+    background-color: #e2e6ea;
+    border-color: #c0c0c0;
+}
+
+
+/* Estilos para o botão de retorno */
+.return-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+
+.return-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+
+.return-button:hover {
+    background-color: #0056b3;
+}
