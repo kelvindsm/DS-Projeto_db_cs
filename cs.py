@@ -1,11 +1,20 @@
 from flask import Flask, render_template
 from urls.adm.setor import bp_setor
-from urls.adm.servico import bp_servicos
+from urls.adm.servicos import bp_servicos
+from urls.adm.empregados import bp_empregados
+from urls.adm.locais import bp_locais
+from urls.adm.ocorrencias import bp_ocorrencias
+from urls.adm.prestadores import bp_prestadores
 
 app = Flask(__name__)
-
 app.register_blueprint(bp_setor)
 app.register_blueprint(bp_servicos)
+app.register_blueprint(bp_empregados)
+app.register_blueprint(bp_locais)
+app.register_blueprint(bp_ocorrencias)
+app.register_blueprint(bp_prestadores)
+
+
 @app.route('/')
 def cs():
     return render_template('index.html')

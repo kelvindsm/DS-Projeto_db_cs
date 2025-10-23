@@ -1,0 +1,60 @@
+{% extends "adm/base_adm.html" %}
+{%block title%}Empregados{%endblock%}
+{%block header_title%}Central de Empregados{%endblock%}
+
+{% block content %}
+
+<section class="form-section">
+    <h2>Incluir Novo Empregado</h2>
+    <form id="empregadoForm" method="POST" action="/adm/empregados/salvar_incluir">
+        <div class="form-group">
+            <label for="nme_empregado">Nome do Empregado:</label>
+            <input type="text" id="nme_empregado" name="nme_empregado" maxlength="50" required>
+        </div>
+        <div class="form-group">
+            <label for="eml_empregado">E-mail:</label>
+            <input type="email" id="eml_empregado" name="eml_empregado" required>
+        </div>
+        <div class="form-group">
+            <label for="mat_empregado">Matricula:</label>
+            <input type="text" id="mat_empregado" name="mat_empregado" required>
+        </div>
+        <div class="form-group">
+            <label> Telefone</label>
+            <input type="tel" id="tel_empregado" name="tel_empregado" required>
+        </div>
+        <!--ramal e senha-->
+        <div class="form-group">
+            <label> Ramal:</label>
+            <input type="text" id="rml_empregado" name="rml_empregado" maxlength="10" required>
+        </div>
+        <div class="form-group">
+            <label>Senha:</label>
+            <input type="password" id="pwd_empregado" name="pwd_empregado" maxlength="128" required>
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <div class="radio-group">
+                <label for="sts_ativo">
+                    <input type="radio" id="sts_ativo" name="sts_empregado" value="A" required checked> Ativo
+                </label>
+                <label for="sts_inativo">
+                    <input type="radio" id="sts_inativo" name="sts_empregado" value="I" required> Inativo
+                </label>
+        <div>
+            <label for="cod_local">Local:</label>
+            <select id="cod_local" name="cod_local" required>
+                {% for local in lst_local %}
+                <option value="{{ local.idt_local }}">{{ local.nme_local }}</option>
+                {% endfor %}
+            </select>
+        </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="reset" class="btn btn-secondary">Limpar</button>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+
+{% endblock %}
