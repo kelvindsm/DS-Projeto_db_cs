@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "adm/base_adm.html" %}
 
-</body>
-</html>
+{% block content %}
+<section class="form-section">
+    <h2>Alterar Setor</h2>
+    <form method="POST" action="/adm/setor/salvar_alterar">
+        <input type="hidden" name="idt_setor" value="{{ setor.idt_setor }}">
+        <div class="form-group">
+            <label for="sgl_setor">Sigla do Setor:</label>
+            <input type="text" id="sgl_setor" name="sgl_setor" maxlength="10" required value="{{ setor.sgl_setor }}">
+        </div>
+        <div class="form-group">
+            <label for="nme_setor">Nome do Setor:</label>
+            <input type="text" id="nme_setor" name="nme_setor" maxlength="50" required value="{{ setor.nme_setor }}">
+        </div>
+        <div class="form-group">
+            <label for="eml_setor">Email do Setor:</label>
+            <input type="email" id="eml_setor" name="eml_setor" maxlength="50" required value="{{ setor.eml_setor }}">
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <div class="radio-group">
+                <label for="sts_ativo">
+                    <input type="radio" id="sts_ativo" name="sts_setor" value="A" required {% if setor.sts_setor == 'A' %}checked{% endif %}> Ativo
+                </label>
+                <label for="sts_inativo">
+                    <input type="radio" id="sts_inativo" name="sts_setor" value="I" required {% if setor.sts_setor == 'I' %}checked{% endif %}> Inativo
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        <a href="/adm/setor/atualizar" class="btn btn-secondary">Voltar</a>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+{% endblock %}

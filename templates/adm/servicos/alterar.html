@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "adm/base_adm.html" %}
 
-</body>
-</html>
+{% block content %}
+<section class="form-section">
+    <h2>Alterar Serviço</h2>
+    <form method="POST" action="/adm/servicos/salvar_alterar">
+        <input type="hidden" name="idt_servico" value="{{ servico.idt_servico }}">
+        <div class="form-group">
+            <label for="nme_servico">Nome do Serviço:</label>
+            <input type="text" id="nme_servico" name="nme_servico" maxlength="50" required value="{{ servico.nme_servico }}">
+        </div>
+        <div class="form-group">
+            <label for="cod_setor">Setor:</label>
+            <select id="cod_setor" name="cod_setor" required>
+                {% for setor in setores %}
+                <option value="{{ setor.idt_setor }}" {% if setor.idt_setor == servico.cod_setor %}selected{% endif %}>
+                    {{ setor.sgl_setor }} - {{ setor.nme_setor }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="vlr_servico">Valor do Serviço:</label>
+            <input type="number" id="vlr_servico" name="vlr_servico" step="0.01" min="0" required value="{{ "%.2f"|format(servico.vlr_servico) }}">
+        </div>
+        <div class="form-group">
+            <label for="num_dias_servico">Número de Dias:</label>
+            <input type="number" id="num_dias_servico" name="num_dias_servico" min="1" required value="{{ servico.num_dias_servico }}">
+        </div>
+        <div class="form-group">
+            <label for="txt_modelo_servico">Descrição do Serviço:</label>
+            <textarea id="txt_modelo_servico" name="txt_modelo_servico" rows="4" required>{{ servico.txt_modelo_servico }}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <div class="radio-group">
+                <label for="sts_ativo">
+                    <input type="radio" id="sts_ativo" name="sts_servico" value="A" required {% if servico.sts_servico == 'A' %}checked{% endif %}> Ativo
+                </label>
+                <label for="sts_inativo">
+                    <input type="radio" id="sts_inativo" name="sts_servico" value="I" required {% if servico.sts_servico == 'I' %}checked{% endif %}> Inativo
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        <a href="/adm/servicos/atualizar" class="btn btn-secondary">Voltar</a>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+{% endblock %}

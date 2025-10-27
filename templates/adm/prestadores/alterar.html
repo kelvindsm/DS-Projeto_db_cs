@@ -1,0 +1,32 @@
+{% extends "adm/base_adm.html" %}
+
+{% block content %}
+<section class="form-section">
+    <h2>Alterar Prestador</h2>
+    <form method="POST" action="/adm/prestadores/salvar_alterar">
+        <input type="hidden" name="idt_prestador" value="{{ prestador.idt_prestador }}">
+        <div class="form-group">
+            <label for="nme_prestador">Nome:</label>
+            <input type="text" id="nme_prestador" name="nme_prestador" maxlength="100" required value="{{ prestador.nme_prestador }}">
+        </div>
+        <div class="form-group">
+            <label for="eml_prestador">Email:</label>
+            <input type="email" id="eml_prestador" name="eml_prestador" maxlength="100" required value="{{ prestador.eml_prestador }}">
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <div class="radio-group">
+                <label for="sts_ativo">
+                    <input type="radio" id="sts_ativo" name="sts_prestador" value="A" required {% if prestador.sts_prestador == 'A' %}checked{% endif %}> Ativo
+                </label>
+                <label for="sts_inativo">
+                    <input type="radio" id="sts_inativo" name="sts_prestador" value="I" required {% if prestador.sts_prestador == 'I' %}checked{% endif %}> Inativo
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        <a href="/adm/prestadores/atualizar" class="btn btn-secondary">Voltar</a>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+{% endblock %}

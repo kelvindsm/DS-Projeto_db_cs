@@ -55,6 +55,46 @@ def roda_atualizar():
     return render_template('adm/setor/atualizar.html', setores=setores, filtro_usado=filtro_usado)
 
 
+@bp_setor.route('/alterar/<int:idt>')  # /adm/setor/alterar/<idt>
+def alterar(idt):
+    dao = SetorDAO()
+    setor = dao.read_by_idt(idt)
+    if not setor:
+        msg = 'Setor não encontrado para alteração.'
+        css_msg = 'erro'
+        return render_template('adm/setor/atualizar.html', msg=msg, css_msg=css_msg, setores=[], filtro_usado='')
+    return render_template('adm/setor/alterar.html', setor=setor, msg="", css_msg="")
+
+
+@bp_setor.route('/salvar_alterar', methods=['POST'])  # /adm/setor/salvar_alterar
+def salvar_alterar():
+    dao = SetorDAO()
+    try:
+        idt_setor = int(request.form.get('idt_setor'))
+    except (TypeError, ValueError):
+        idt_setor = None
+
+    setor = dao.read_by_idt(idt_setor) if idt_setor is not None else None
+    if not setor:
+        msg = 'Setor não encontrado para alteração.'
+        css_msg = 'erro'
+        return render_template('adm/setor/atualizar.html', msg=msg, css_msg=css_msg, setores=[], filtro_usado='')
+
+    setor.sgl_setor = request.form['sgl_setor']
+    setor.nme_setor = request.form['nme_setor']
+    setor.eml_setor = request.form['eml_setor']
+    setor.sts_setor = request.form['sts_setor']
+
+    if dao.update(setor):
+        msg = f"Setor {setor.idt_setor} atualizado com sucesso!"
+        css_msg = "sucesso"
+    else:
+        msg = "Erro ao tentar atualizar setor!"
+        css_msg = "erro"
+
+    return render_template('adm/setor/alterar.html', setor=setor, msg=msg, css_msg=css_msg)
+
+
 @bp_setor.route('/excluir/<int:idt>')
 def excluir(idt):
     dao = SetorDAO()
