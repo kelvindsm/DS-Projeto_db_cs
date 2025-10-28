@@ -1,11 +1,13 @@
 from flask import Flask, render_template
 from urls.adm.setor import bp_setor
 from urls.adm.servico import bp_servicos
+from urls.adm.empregados import bp_empregados
 
 app = Flask(__name__)
 
 app.register_blueprint(bp_setor)
 app.register_blueprint(bp_servicos)
+app.register_blueprint(bp_empregados)
 @app.route('/')
 def cs():
     return render_template('index.html')
