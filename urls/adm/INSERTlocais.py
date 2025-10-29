@@ -24,10 +24,10 @@ def salvar_incluir():
     local.cod_setor = request.form['cod_setor']
 
     if dao.insert(local):
-        msg = f"Serviço número {local.idt_local} inserido com sucesso!"
+        msg = f"Local número {local.idt_local} inserido com sucesso!"
         css_msg = "sucesso"
     else:
-        msg = "Erro ao tentar incluir serviço!"
+        msg = "Erro ao tentar incluir Local!"
         css_msg = "erro"
 
     dao_setor = SetorDAO()

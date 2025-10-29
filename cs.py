@@ -1,10 +1,10 @@
 from flask import Flask, render_template
 from urls.adm.setor import bp_setor
 from urls.adm.servicos import bp_servicos
-from urls.adm.empregados import bp_empregados
-from urls.adm.locais import bp_locais
-from urls.adm.ocorrencias import bp_ocorrencias
-from urls.adm.prestadores import bp_prestadores
+from urls.adm.INSERTempregados import bp_empregados
+from urls.adm.INSERTlocais import bp_locais
+from urls.adm.INSERTocorrencias import bp_ocorrencias
+from urls.adm.INSERTprestadores import bp_prestadores
 
 app = Flask(__name__)
 app.register_blueprint(bp_setor)

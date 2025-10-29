@@ -18,7 +18,7 @@ def salvar_incluir():
     ocorrencia.txt_modelo_ocorrencia = request.form['txt_modelo_ocorrencia']
 
     if dao.insert(ocorrencia):
-        msg = f"Setor número {ocorrencia.idt_tipo_ocorrencia} inserido com sucesso!"
+        msg = f"Ocorrência número {ocorrencia.idt_tipo_ocorrencia} inserido com sucesso!"
         css_msg = "sucesso"
     else:
         msg = "Erro ao tentar incluir ocorrencia!"
