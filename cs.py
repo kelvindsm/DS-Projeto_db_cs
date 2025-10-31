@@ -2,12 +2,18 @@ from flask import Flask, render_template
 from urls.adm.setor import bp_setor
 from urls.adm.servico import bp_servicos
 from urls.adm.empregados import bp_empregados
+from urls.adm.prestador import bp_prestadores
+from urls.adm.local import bp_locais
+from urls.adm.tipo_ocorrencia import bp_ocorrencias
 
 app = Flask(__name__)
 
 app.register_blueprint(bp_setor)
 app.register_blueprint(bp_servicos)
 app.register_blueprint(bp_empregados)
+app.register_blueprint(bp_prestadores)
+app.register_blueprint(bp_locais)
+app.register_blueprint(bp_ocorrencias)
 @app.route('/')
 def cs():
     return render_template('index.html')

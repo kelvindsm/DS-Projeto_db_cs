@@ -67,6 +67,6 @@ def excluir(idt):
     else:
         msg = 'Falha ao tentar excluir empregado! Verifique se existe alguma pendência!'
         css_msg = "erro"
-    setor = dao.read_by_idt(idt)
-    return render_template('adm/empregados/atualizar.html', msg=msg, css_msg=css_msg, setores=[], filtro_usado='')
+    empregado = dao.read_by_idt(idt)
+    return render_template('adm/empregados/atualizar.html', msg=msg, css_msg=css_msg, empregados=[], filtro_usado='')
 
