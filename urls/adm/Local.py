@@ -2,10 +2,9 @@ from flask import Blueprint, render_template, request
 from database.Local_dao import LocalDAO
 from database.setor_dao import SetorDAO
 
-
 bp_locais = Blueprint('locais', __name__, url_prefix='/adm/locais')
 
-
+# INSERT
 @bp_locais.route('/incluir')  # /adm/locais/incluir
 def incluir():
     dao = SetorDAO()
@@ -34,3 +33,22 @@ def salvar_incluir():
     lst_setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
 
     return render_template('adm/locais/incluir.html', msg=msg, css_msg=css_msg, lst_setores=lst_setores)
+
+@bp_locais.route('/consultar')  # /adm/empregados/consultar
+def consultar():
+    return render_template('adm/locais/consultar.html', locais=[], filtro_usado='')
+
+@bp_locais.route('/roda_consultar', methods=['POST'])  # /adm/empregados/roda_consultar
+def roda_consultar():
+    nme_local = request.form['nme_local']
+    filtros = []
+
+    if nme_local:
+        filtros.append(('nme_local', 'ilike', f'%{nme_local}%'))
+
+    filtro_usado = f'Nome do local: {nme_local or "Não informado"}'
+
+    dao = LocalDAO()
+    locais = dao.read_by_like('nme_local', nme_local)
+
+    return render_template('adm/locais/consultar.html', locais=locais, filtro_usado=filtro_usado)
