@@ -1,0 +1,32 @@
+{% extends "adm/base_adm.html" %}
+
+{% block content %}
+<section class="form-section">
+    <h2>Alterar Empregado</h2>
+    <form method="POST" action="/adm/empregados/salvar_alterar">
+        <input type="hidden" name="idt_empregado" value="{{ empregado.idt_empregado }}">
+        <div class="form-group">
+            <label for="nme_empregado">Nome:</label>
+            <input type="text" id="nme_empregado" name="nme_empregado" maxlength="100" required value="{{ empregado.nme_empregado }}">
+        </div>
+        <div class="form-group">
+            <label for="eml_empregado">Email:</label>
+            <input type="email" id="eml_empregado" name="eml_empregado" maxlength="100" required value="{{ empregado.eml_empregado }}">
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <div class="radio-group">
+                <label for="sts_ativo">
+                    <input type="radio" id="sts_ativo" name="sts_empregado" value="A" required {% if empregado.sts_empregado == 'A' %}checked{% endif %}> Ativo
+                </label>
+                <label for="sts_inativo">
+                    <input type="radio" id="sts_inativo" name="sts_empregado" value="I" required {% if empregado.sts_empregado == 'I' %}checked{% endif %}> Inativo
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        <a href="/adm/empregados/atualizar" class="btn btn-secondary">Voltar</a>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+{% endblock %}

@@ -50,8 +50,8 @@
                            <td>{{ servico.num_dias_servico }}</td>
                            <td>{{ "Ativo" if servico.sts_servico == 'A' else "Inativo" }}</td>
                            <td class="action-buttons">
-                               <button class="btn btn-edit" onclick="window.open('/adm/serv/alterar/{{ servico.idt_servico }}', '_self')">Alterar</button>
-                               <button class="btn btn-delete" onclick="confirmar({{ servico.idt_servico }}, '{{ servico.nme_servico }}')">Excluir</button>
+                               <button class="btn btn-edit" onclick="window.open('/adm/servicos/alterar/{{ servico.idt_servico }}', '_self')">Alterar</button>
+                               <button class="btn btn-delete" onclick="confirmar('{{ servico.idt_servico }}', '{{ servico.nme_servico }}')">Excluir</button>
                            </td>
                        </tr>
                        {% else %}
@@ -76,7 +76,7 @@
    function confirmar(idt, nme){
        retorno = confirm('Confirma a exclusão do serviço: ' + nme + ' ?');
        if (retorno){
-          window.open('/adm/serv/excluir/' + idt, '_self');
+          window.open('/adm/servicos/excluir/' + idt, '_self');
        }
    }
 {% endblock %}

@@ -18,11 +18,11 @@ def salvar_incluir():
     dao = ServicoDAO()
     serv = dao.new_object()
     serv.nme_servico = request.form['nme_servico']
-    serv.num_dias_servico = request.form['num_dias_servico']
+    serv.num_dias_servico = int(request.form['num_dias_servico'])
     serv.vlr_servico = request.form['vlr_servico']
     serv.txt_modelo_servico = request.form['txt_modelo_servico']
     serv.sts_servico = request.form['sts_servico']
-    serv.cod_setor = request.form['cod_setor']
+    serv.cod_setor = int(request.form['cod_setor'])
 
     if dao.insert(serv):
         msg = f"Serviço número {serv.idt_servico} inserido com sucesso!"
@@ -87,6 +87,58 @@ def roda_atualizar():
     dao_setor = SetorDAO()
     setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
     return render_template('adm/servicos/atualizar.html', servicos=servicos, setores=setores, filtro_usado=filtro_usado)
+
+
+@bp_servicos.route('/alterar/<int:idt>')  # /adm/servicos/alterar/<idt>
+def alterar(idt):
+    dao_servico = ServicoDAO()
+    servico = dao_servico.read_by_idt(idt)
+    if not servico:
+        msg = 'Serviço não encontrado para alteração.'
+        css_msg = 'erro'
+        dao_setor = SetorDAO()
+        setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+        return render_template('adm/servicos/atualizar.html', msg=msg, css_msg=css_msg, servicos=[], setores=setores, filtro_usado='')
+
+    dao_setor = SetorDAO()
+    setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+    return render_template('adm/servicos/alterar.html', servico=servico, setores=setores, msg="", css_msg="")
+
+
+@bp_servicos.route('/salvar_alterar', methods=['POST'])  # /adm/servicos/salvar_alterar
+def salvar_alterar():
+    dao_servico = ServicoDAO()
+
+    try:
+        idt_servico = int(request.form.get('idt_servico'))
+    except (TypeError, ValueError):
+        idt_servico = None
+
+    servico = dao_servico.read_by_idt(idt_servico) if idt_servico is not None else None
+    if not servico:
+        msg = 'Serviço não encontrado para alteração.'
+        css_msg = 'erro'
+        dao_setor = SetorDAO()
+        setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+        return render_template('adm/servicos/atualizar.html', msg=msg, css_msg=css_msg, servicos=[], setores=setores, filtro_usado='')
+
+    servico.nme_servico = request.form['nme_servico']
+    servico.num_dias_servico = int(request.form['num_dias_servico'])
+    servico.vlr_servico = request.form['vlr_servico']
+    servico.txt_modelo_servico = request.form['txt_modelo_servico']
+    servico.sts_servico = request.form['sts_servico']
+    servico.cod_setor = int(request.form['cod_setor'])
+
+    if dao_servico.update(servico):
+        msg = f"Serviço {servico.idt_servico} atualizado com sucesso!"
+        css_msg = "sucesso"
+    else:
+        msg = "Erro ao tentar atualizar serviço!"
+        css_msg = "erro"
+
+    dao_setor = SetorDAO()
+    setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+    return render_template('adm/servicos/alterar.html', servico=servico, setores=setores, msg=msg, css_msg=css_msg)
 
 
 @bp_servicos.route('/excluir/<int:idt>')

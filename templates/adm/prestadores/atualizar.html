@@ -1,0 +1,64 @@
+{% extends "adm/base_adm.html" %}
+
+{% block content %}
+<section class="form-section">
+    <h2>Atualizar e Gerenciar Prestadores</h2>
+    <form class="consultar-form" action="/adm/prestadores/roda_atualizar" method="POST">
+        <div class="form-group">
+            <label for="nme_prestador">Nome:</label>
+            <input type="text" id="nme_prestador" name="nme_prestador" placeholder="Digite o nome para filtrar">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+
+<section class="table-section">
+    <p>Total de registros encontrados: <strong>{{ prestadores | length }}</strong></p>
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for prestador in prestadores %}
+            <tr>
+                <td>{{ prestador.idt_prestador }}</td>
+                <td>{{ prestador.nme_prestador }}</td>
+                <td>{{ prestador.eml_prestador }}</td>
+                <td>{{ "Ativo" if prestador.sts_prestador == 'A' else "Inativo" }}</td>
+                <td class="action-buttons">
+                    <button class="btn btn-edit" onclick="window.open('/adm/prestadores/alterar/{{ prestador.idt_prestador }}', '_self')">Alterar</button>
+                    <button class="btn btn-delete" onclick="confirmar({{ prestador.idt_prestador }}, '{{ prestador.nme_prestador}}')">Excluir</button>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Nenhum prestador encontrado.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if filtro_usado %}
+    <div class="filter-footer">
+        <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block script %}
+function confirmar(idt, nme){
+retorno = confirm('Confirma a exclusão do prestador: ' + nme + ' ?');
+if (retorno){
+window.open('/adm/prestadores/excluir/' + idt, '_self');
+}
+}
+{% endblock %}
