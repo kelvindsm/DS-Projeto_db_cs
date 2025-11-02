@@ -1,0 +1,61 @@
+{% extends "adm/base_adm.html" %}
+
+{% block title%}Prestadores{% endblock %}
+{% block header_title %}Central de Prestadores{% endblock %}
+
+{% block content %}
+
+<section class="form-section">
+    <h2>Incluir Novo Prestador</h2>
+    <form id="servicoForm" method="POST" action="/adm/prestadores/salvar_incluir">
+        <div class="form-group">
+            <label for="nme_prestador">Nome:</label>
+            <input type="text" id="nme_prestador" name="nme_prestador" maxlength="75" required>
+        </div>
+        <div class="form-group">
+            <label for="mat_prestador">matrícula:</label>
+            <input type="text" id="mat_prestador" name="mat_prestador" required>
+        </div>
+        <div class="form-group">
+            <label for="eml_prestador">E-mail:</label>
+            <input type="email" id="eml_prestador" name="eml_prestador" required>
+        </div>
+        <div class="form-group">
+            <label for="tel_prestador">Telefone:</label>
+            <input type="text" id="tel_prestador" name="tel_prestador" maxlength="14" required>
+        </div>
+        <div class="form-group">
+            <label for="rml_prestador">Ramal:</label>
+            <input type="text" id="rml_prestador" name="rml_prestador" required>
+        </div>
+        <div class="form-group">
+            <label for="pwd_prestador">Senha:</label>
+            <input type="password" id="pwd_prestador" name="pwd_prestador" required>
+        </div>
+        <div>
+            <label for="cod_setor">Setor:</label>
+            <select id="cod_setor" name="cod_setor" required>
+                {% for setor in lst_setores %}
+                <option value="{{ setor.idt_setor }}">{{ setor.sgl_setor }}-{{ setor.nme_setor }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <div class="radio-group">
+                <label for="sts_ativo_prestador">
+                    <input type="radio" id="sts_ativo_prestador" name="sts_prestador" value="A" required checked> Ativo
+                </label>
+                <label for="sts_inativo_prestador">
+                    <input type="radio" id="sts_inativo_prestador" name="sts_prestador" value="I" required> Inativo
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="reset" class="btn btn-secondary">Limpar</button>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+
+{% endblock %}

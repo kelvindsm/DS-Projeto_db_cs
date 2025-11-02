@@ -1,0 +1,48 @@
+{% extends "adm/base_adm.html" %}
+
+{% block title%}Ocorrencias{% endblock %}
+{% block header_title %}Central de Ocorrencias{% endblock %}
+
+{% block content %}
+
+<section class="form-section">
+    <h2>Incluir Nova Ocorrencia</h2>
+    <form id="servicoForm" method="POST" action="/adm/ocorrencias/salvar_incluir">
+        <div class="form-group">
+            <label for="nme_tipo_ocorrencia">Nome Ocorrencia:</label>
+            <input type="text" id="nme_tipo_ocorrencia" name="nme_tipo_ocorrencia" maxlength="150" required>
+        </div>
+        <div class="form-group">
+            <label for="txt_modelo_ocorrencia">Modelo Ocorrencia:</label>
+            <input type="text" id="txt_modelo_ocorrencia" name="txt_modelo_ocorrencia" required>
+        </div>
+        <div class="form-group">
+            <label>Para quem é o chamado:</label>
+            <div class="radio-group">
+                <label for="sts_empregado">
+                    <input type="radio" id="sts_empregado" name="tpo_tipo_ocorrencia" value="E" required checked> Empregado
+                </label>
+                <label for="sts_prestador">
+                    <input type="radio" id="sts_prestador" name="tpo_tipo_ocorrencia" value="P" required > Prestador
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <div class="radio-group">
+                <label for="sts_ativo">
+                    <input type="radio" id="sts_ativo" name="sts_tipo_ocorrencia" value="A" required checked> Ativo
+                </label>
+                <label for="sts_inativo">
+                    <input type="radio" id="sts_inativo" name="sts_tipo_ocorrencia" value="I" required> Inativo
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="reset" class="btn btn-secondary">Limpar</button>
+    </form>
+    <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+</section>
+
+{% endblock %}
