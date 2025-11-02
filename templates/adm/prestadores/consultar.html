@@ -1,0 +1,72 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+<section class="form-section">
+    <h2>Consultar Prestadores</h2>
+    <form id="consultarForm" class="consultar-form" action="/adm/prestadores/roda_consultar" method="POST">
+        <div class="form-group">
+            <label for="nme_prestador">Nome do Prestador:</label>
+            <input type="text" id="nme_prestador" name="nme_prestador" placeholder="Digite o nome do prestador para filtrar">
+        </div>
+        <div class="form-group">
+            <label for="cod_setor">Setor:</label>
+            <select id="cod_setor" name="cod_setor">
+                <option value="">Todos os setores</option>
+                {% for setor in setores %}
+                <option value="{{ setor.idt_setor }}">{{ setor.nme_setor }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</section>
+<section class="table-section">
+    <p>Total de registros encontrados: <strong>{{ prestadores | length }}</strong></p>
+    <div class="table-container">
+        <table id="prestadoresTable" class="data-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Status</th>
+                <th>Telefone</th>
+                <th>Ramal</th>
+                <th>Setor</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for prestador in prestadores %}
+            <tr>
+                <td>{{ prestador.idt_prestador }}</td>
+                <td>{{ prestador.eml_prestador }}</td>
+                <td>{{ prestador.mat_prestador }}</td>
+                <td>{{ prestador.nme_prestador }}</td>
+                <td>{{ "Ativo" if prestador.sts_prestador == 'A' else "Inativo" }}</td>
+                <td>{{ prestador.tel_prestador }}</td>
+                <td>{{ prestador.rml_prestador }}</td>
+                <td>
+                    {% if prestador.tt_setor %}
+                        {{ prestador.tt_setor.nme_setor }}
+                    {% else %}
+                        Sem local
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">Nenhum prestador encontrado.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if filtro_usado %}
+    <div class="filter-footer">
+        <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

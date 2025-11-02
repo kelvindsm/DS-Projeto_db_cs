@@ -1,0 +1,51 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+<section class="form-section">
+    <h2>Consultar Tipo de ocorrencia</h2>
+    <form id="consultarForm" class="consultar-form" action="/adm/ocorrencias/roda_consultar" method="POST">
+        <div class="form-group">
+            <label for="nme_tipo_ocorrencia">Tipos de ocorrencia:</label>
+            <input type="text" id="nme_tipo_ocorrencia" name="nme_tipo_ocorrencia" placeholder="Digite o tipo de ocorrencia para filtrar">
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</section>
+<section class="table-section">
+    <p>Total de registros encontrados: <strong>{{ tpOcorrencias | length }}</strong></p>
+    <div class="table-container">
+        <table id="tpOcorrenciaTable" class="data-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Tipo de ocorrência</th>
+                <th>Status</th>
+                <th>Modelo de ocorrência</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ocorrencia in tpOcorrencias %}
+            <tr>
+                <td>{{ ocorrencia.idt_tipo_ocorrencia }}</td>
+                <td>{{ ocorrencia.nme_tipo_ocorrencia }}</td>
+                <td>{{ ocorrencia.tpo_tipo_ocorrencia }}</td>
+                <td>{{ "Ativo" if ocorrencia.sts_tipo_ocorrencia == 'A' else "Inativo" }}</td>
+                <td>{{ ocorrencia.txt_modelo_ocorrencia }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">Nenhum prestador encontrado.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if filtro_usado %}
+    <div class="filter-footer">
+        <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

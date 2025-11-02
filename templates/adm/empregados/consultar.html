@@ -1,0 +1,72 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+<section class="form-section">
+    <h2>Consultar Empregados</h2>
+    <form id="consultarForm" class="consultar-form" action="/adm/empregados/roda_consultar" method="POST">
+        <div class="form-group">
+            <label for="nme_empregado">Nome do Empregado:</label>
+            <input type="text" id="nme_empregado" name="nme_empregado" placeholder="Digite o nome do empregado para filtrar">
+        </div>
+        <div class="form-group">
+            <label for="cod_local">Local:</label>
+            <select id="cod_local" name="cod_local">
+                <option value="">Todos os locais</option>
+                {% for local in locais %}
+                <option value="{{ local.idt_local }}">{{ local.nme_local }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</section>
+<section class="table-section">
+    <p>Total de registros encontrados: <strong>{{ empregados | length }}</strong></p>
+    <div class="table-container">
+        <table id="empregadosTable" class="data-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Status</th>
+                <th>Telefone</th>
+                <th>Ramal</th>
+                <th>Local</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for empregado in empregados %}
+            <tr>
+                <td>{{ empregado.idt_empregado }}</td>
+                <td>{{ empregado.eml_empregado }}</td>
+                <td>{{ empregado.mat_empregado }}</td>
+                <td>{{ empregado.nme_empregado }}</td>
+                <td>{{ "Ativo" if empregado.sts_empregado == 'A' else "Inativo" }}</td>
+                <td>{{ empregado.tel_empregado }}</td>
+                <td>{{ empregado.rml_empregado }}</td>
+                <td>
+                    {% if empregado.tb_local %}
+                        {{ empregado.tb_local.nme_local }}
+                    {% else %}
+                        Sem local
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">Nenhum empregado encontrado.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if filtro_usado %}
+    <div class="filter-footer">
+        <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
