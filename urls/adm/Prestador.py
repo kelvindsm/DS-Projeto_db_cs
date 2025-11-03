@@ -56,7 +56,7 @@ def roda_consultar():
 
     # filtro_usado = f'Nome do empregado: {nme_empregado}'
     dao = PrestadorDAO()
-    prestadores = dao.read_by_like('nme_prestador', nme_prestador)
+    prestadores = dao.read_by_filters(filtros)
 
     dao_setor = SetorDAO()
     setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])

@@ -48,19 +48,20 @@ def consultar():
 
 @bp_empregados.route('/roda_consultar', methods=['POST'])  # /adm/empregados/roda_consultar
 def roda_consultar():
-    nme_empregado = request.form['nme_empregado']
-    cod_local = request.form['cod_local']
+    nme_empregado = request.form.get('nme_empregado', '').strip()
+    cod_local = request.form.get('cod_local', '').strip()
     filtros = []
 
     if nme_empregado:
         filtros.append(('nme_empregado', 'ilike', f'%{nme_empregado}%'))
     if cod_local:
         filtros.append(('cod_local', '=', int(cod_local)))
-    filtro_usado = f'Nome do Empregado: {nme_empregado or "Não informado"} / Código do Setor: {cod_local or "Todos"}'
+
+    filtro_usado = f'Nome do Empregado: {nme_empregado or "Não informado"} / Código do Local: {cod_local or "Todos"}'
 
     # filtro_usado = f'Nome do empregado: {nme_empregado}'
     dao = EmpregadoDAO()
-    empregados = dao.read_by_like('nme_empregado', nme_empregado)
+    empregados = dao.read_by_filters(filtros)
 
     dao_local = LocalDAO()
     locais = dao_local.read_by_filters([('sts_local', '=', 'A')])
