@@ -96,7 +96,7 @@ def salvar_alterar():
         css_msg = 'erro'
         return render_template('adm/locais/atualizar.html', msg=msg, css_msg=css_msg, locais=[], filtro_usado='')
 
-    local.dsc_local = request.form['dsc_local']
+    local.nme_local = request.form['nme_local']
     local.sts_local = request.form['sts_local']
 
     if dao.update(local):
