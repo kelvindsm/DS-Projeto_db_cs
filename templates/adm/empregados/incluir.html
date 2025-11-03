@@ -21,12 +21,20 @@
         </div>
         <div class="form-group">
             <label> Telefone</label>
-            <input type="tel" id="tel_empregado" name="tel_empregado" maxlength="14" required>
+            <input type="tel" id="tel_empregado" name="tel_empregado" maxlength="14" required placeholder="(99)99999-9999">
         </div>
         <!--ramal e senha-->
         <div class="form-group">
             <label> Ramal:</label>
             <input type="text" id="rml_empregado" name="rml_empregado" maxlength="10" required>
+        </div>
+        <div class="form-group">
+            <label for="cod_local">Local:</label>
+            <select id="cod_local" name="cod_local" required>
+                {% for local in lst_local %}
+                    <option value="{{ local.idt_local }}">{{ local.nme_local }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="form-group">
             <label>Senha:</label>
@@ -41,14 +49,6 @@
                 <label for="sts_inativo">
                     <input type="radio" id="sts_inativo" name="sts_empregado" value="I" required> Inativo
                 </label>
-        <div>
-            <label for="cod_local">Local:</label>
-            <select id="cod_local" name="cod_local" required>
-                {% for local in lst_local %}
-                <option value="{{ local.idt_local }}">{{ local.nme_local }}</option>
-                {% endfor %}
-            </select>
-        </div>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -56,5 +56,17 @@
     </form>
     <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
 </section>
+    <script>
+    const tel = document.getElementById('tel_empregado') // Seletor do campo de telefone
 
+tel.addEventListener('keypress', (e) => mascaraTelefone(e.target.value)) // Dispara quando digitado no campo
+tel.addEventListener('change', (e) => mascaraTelefone(e.target.value)) // Dispara quando autocompletado o campo
+
+const mascaraTelefone = (valor) => {
+    valor = valor.replace(/\D/g, "")
+    valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2")
+    valor = valor.replace(/(\d)(\d{4})$/, "$1-$2")
+    tel.value = valor // Insere o(s) valor(es) no campo
+}
+    </script>
 {% endblock %}
