@@ -5,6 +5,7 @@ from urls.adm.empregado import bp_empregados
 from urls.adm.prestador import bp_prestadores
 from urls.adm.local import bp_locais
 from urls.adm.tipo_ocorrencia import bp_ocorrencias
+from urls.solicitante import bp_solicitante
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ app.register_blueprint(bp_empregados)
 app.register_blueprint(bp_prestadores)
 app.register_blueprint(bp_locais)
 app.register_blueprint(bp_ocorrencias)
+app.register_blueprint(bp_solicitante)
 
 @app.route('/')
 def cs():

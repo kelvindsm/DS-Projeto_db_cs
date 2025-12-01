@@ -1,6 +1,5 @@
 # Classe Genérica de "Model"
 
-
 from sqlalchemy import and_, text
 from sqlalchemy import func
 from database.db import Database
@@ -10,7 +9,7 @@ class DAO:
     def __init__(self, table_name, idt_column_name):
         self.db = Database()
         self.ses = self.db.get_session()
-        self.table = getattr(self.db.DB.classes, table_name)  # Obtém a classe da tabela dinamicamente
+        self.table = getattr(self.db.DB.classes, table_name)
         self.idt_column_name = idt_column_name
         self.table_name = table_name
 
@@ -28,7 +27,7 @@ class DAO:
     def read_by_like(self, field, value):
         try:
             objs = self.ses.query(self.table).filter(
-                getattr(self.table, field).like(f"%{value}%")).all()  # Retorna uma lista
+                getattr(self.table, field).like(f"%{value}%")).all()
             return objs
         except Exception as e:
             print(f"Erro ao ler em {self.table_name} e {field} com LIKE: {e}")
@@ -52,8 +51,7 @@ class DAO:
             conditions = []
             for field, operator, value in filters:
                 operator = operator.lower()
-                column = getattr(self.table, field)  # Obtém a coluna
-
+                column = getattr(self.table, field)
                 if operator == "=":
                     condition = column == value
                 elif operator == "!=":
@@ -67,8 +65,8 @@ class DAO:
                 elif operator == "<=":
                     condition = column <= value
                 elif operator == "like":
-                    condition = column.like(f"%{value}%")  # Use diretamente na coluna
-                elif operator == "ilike":  # Para pesquisas case-insensitive
+                    condition = column.like(f"%{value}%")
+                elif operator == "ilike":
                     condition = column.ilike(f"%{value}%")
                 else:
                     raise ValueError(f"Operador '{operator}' não suportado.")
@@ -98,7 +96,7 @@ class DAO:
             conditions = []
             for field, operator, value in filters:
                 operator = operator.lower()
-                column = getattr(self.table, field)  # Obtém a coluna
+                column = getattr(self.table, field)
 
                 if operator == "=":
                     condition = getattr(self.table, field) == value
@@ -113,15 +111,15 @@ class DAO:
                 elif operator == "<=":
                     condition = getattr(self.table, field) <= value
                 elif operator == "like":
-                    condition = column.like(f"%{value}%")  # Use diretamente na coluna
-                elif operator == "ilike":  # Para pesquisas case-insensitive
+                    condition = column.like(f"%{value}%")
+                elif operator == "ilike":
                     condition = column.ilike(f"%{value}%")
                 else:
                     raise ValueError(f"Operador '{operator}' não suportado.")
                 conditions.append(condition)
 
             num_count = self.ses.query(func.count()).select_from(self.table).filter(
-                and_(*conditions)).scalar()  # Usando AND para multiplos filtros
+                and_(*conditions)).scalar()
             return num_count
 
 
@@ -155,15 +153,12 @@ class DAO:
 
     def update(self, obj):
         with self.db.get_session() as ses:
-            # Se o obj já veio da sessão, apenas commit
-            # Se o obj é um "detached" object, use merge
             try:
                 if not ses.query(obj.__class__).filter(
                         getattr(obj, self.idt_column_name) == getattr(obj, self.idt_column_name)).first():
-                    # Se não foi encontrado na sessão atual, tente "merge"
                     obj = ses.merge(obj)
                 ses.commit()
-                ses.refresh(obj)  # Opcional: recarregar o objeto após o commit
+                ses.refresh(obj)
                 return obj
             except Exception as e:
                 ses.rollback()
