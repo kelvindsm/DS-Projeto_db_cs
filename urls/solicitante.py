@@ -8,11 +8,9 @@ bp_solicitante = Blueprint('solicitante', __name__, url_prefix='/solicitante')
 
 @bp_solicitante.route('/solicitacoes_ativas')
 def solicitacoes_ativas():
-    """Exibe a página de solicitações ativas de serviços"""
     dao = SolicitacaoDAO()
     solicitacoes = dao.get_solicitacoes_ativas()
     
-    # Obter lista de setores para filtro
     dao_setor = SetorDAO()
     setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
     
@@ -24,7 +22,6 @@ def solicitacoes_ativas():
 
 @bp_solicitante.route('/solicitacoes_ativas/filtrar', methods=['POST'])
 def solicitacoes_ativas_filtrar():
-    """Filtra solicitações ativas por setor"""
     from flask import request
     
     cod_setor = request.form.get('cod_setor', '')
@@ -58,7 +55,6 @@ def api_analise_valores_servicos():
     dao = ServicoDAO()
     dados = dao.get_analise_valores_por_setor()
     
-    # Verifica se dados é None, vazio ou não é uma lista
     if not dados or not isinstance(dados, list) or len(dados) == 0:
         return jsonify({
             'setores': [],

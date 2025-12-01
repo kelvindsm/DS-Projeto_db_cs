@@ -6,10 +6,6 @@ class SolicitacaoDAO(DAO):
         super().__init__("tb_servico", "idt_servico")
 
     def get_solicitacoes_ativas(self):
-        """
-        Retorna todas as solicitações (serviços) ativas
-        Joins com tabela de setores para obter nome do setor
-        """
         try:
             sql = """
             SELECT 

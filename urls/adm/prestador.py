@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 
-from database.Prestador_dao import PrestadorDAO
+from database.prestador_dao import PrestadorDAO
 from database.setor_dao import SetorDAO
 
 bp_prestadores = Blueprint('prestadores', __name__, url_prefix='/adm/prestadores')

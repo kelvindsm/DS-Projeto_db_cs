@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from database.Local_dao import LocalDAO
+from database.local_dao import LocalDAO
 from database.setor_dao import SetorDAO
 
 bp_locais = Blueprint('locais', __name__, url_prefix='/adm/locais')

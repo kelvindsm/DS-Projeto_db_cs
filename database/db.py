@@ -17,7 +17,6 @@ class Database:
         self.engine = create_engine(self.DB_URL)
         self.DB = automap_base()
         self.DB.prepare(autoload_with=self.engine, schema="cs")
-        print("Tabelas mapeadas:", self.DB.classes.keys())
         self.session_factory = sessionmaker(bind=self.engine)
         self.ses = self.session_factory()
 

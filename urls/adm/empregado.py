@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request
 
-from database.Empregado_dao import EmpregadoDAO
-from database.Local_dao import LocalDAO
+from database.empregado_dao import EmpregadoDAO
+from database.local_dao import LocalDAO
 
 bp_empregados = Blueprint('empregados', __name__, url_prefix='/adm/empregados')
 
