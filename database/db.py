@@ -8,16 +8,16 @@ class Database:
     PASSWORD = 'ceub123456'
     HOST = 'localhost'
     PORT = 5432
-    DATABASE = 'postgres'
-    SCHEMA_DEFAULT = 'cs'
+    DATABASE = 'db_cs'
 
-    DB_URL = f"postgresql+psycopg://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}?options=-csearch_path%3D{SCHEMA_DEFAULT}"
+    DB_URL = f"postgresql+psycopg://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}"
 
     # Criar o mapeamento do banco de dados db_central_servico
     def __init__(self):
         self.engine = create_engine(self.DB_URL)
         self.DB = automap_base()
-        self.DB.prepare(autoload_with=self.engine)
+        self.DB.prepare(autoload_with=self.engine, schema="cs")
+        print("Tabelas mapeadas:", self.DB.classes.keys())
         self.session_factory = sessionmaker(bind=self.engine)
         self.ses = self.session_factory()
 

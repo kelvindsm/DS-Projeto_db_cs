@@ -5,7 +5,6 @@ from database.Local_dao import LocalDAO
 
 bp_empregados = Blueprint('empregados', __name__, url_prefix='/adm/empregados')
 
-# INSERT
 @bp_empregados.route('/incluir')  # /adm/empregados/incluir
 def incluir():
     dao = LocalDAO()
@@ -38,8 +37,6 @@ def salvar_incluir():
 
     return render_template('adm/empregados/incluir.html', msg=msg, css_msg=css_msg, lst_local=lst_local,)
 
-# SELECT
-
 @bp_empregados.route('/consultar')  # /adm/empregados/consultar
 def consultar():
     dao_local = LocalDAO()
@@ -68,7 +65,6 @@ def roda_consultar():
 
     return render_template('adm/empregados/consultar.html', empregados=empregados, locais=locais, filtro_usado=filtro_usado)
 
-# UPDATE
 @bp_empregados.route('/atualizar')
 def atualizar():
     return render_template('adm/empregados/atualizar.html', empregados=[], filtro_usado='', msg='', css_msg='')

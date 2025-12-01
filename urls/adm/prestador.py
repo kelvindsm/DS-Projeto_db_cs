@@ -63,8 +63,6 @@ def roda_consultar():
 
     return render_template('adm/prestadores/consultar.html', prestadores=prestadores, setores=setores, filtro_usado=filtro_usado)
 
-# UPDATE
-
 @bp_prestadores.route('/atualizar')
 def atualizar():
     return render_template('adm/prestadores/atualizar.html', prestadores=[], filtro_usado='', msg='', css_msg='')

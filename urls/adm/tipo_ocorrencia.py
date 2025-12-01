@@ -2,13 +2,13 @@ from flask import Blueprint, render_template, request
 
 from database.tipo_ocorrencia_dao import TipoOcorrenciaDAO
 
-bp_tpOcorrencias = Blueprint('ocorrencias', __name__, url_prefix='/adm/ocorrencias')
+bp_ocorrencias = Blueprint('ocorrencias', __name__, url_prefix='/adm/ocorrencias')
 
-@bp_tpOcorrencias.route('/incluir')  # /adm/ocorrencias/incluir
+@bp_ocorrencias.route('/incluir')  # /adm/ocorrencias/incluir
 def incluir():
     return render_template('adm/ocorrencias/incluir.html', msg="", css_msg="")
 
-@bp_tpOcorrencias.route('/salvar_incluir', methods=['POST'])  # /adm/ocorrencias/salvar_incluir
+@bp_ocorrencias.route('/salvar_incluir', methods=['POST'])  # /adm/ocorrencias/salvar_incluir
 def salvar_incluir():
     dao = TipoOcorrenciaDAO()
     ocorrencia = dao.new_object()
@@ -27,12 +27,12 @@ def salvar_incluir():
     return render_template('adm/ocorrencias/incluir.html', msg=msg, css_msg=css_msg)
 
 
-@bp_tpOcorrencias.route('/consultar')  # /adm/setor/consultar
+@bp_ocorrencias.route('/consultar')  # /adm/setor/consultar
 def consultar():
     return render_template('adm/ocorrencias/consultar.html', tpOcorrencias=[], filtro_usado='')
 
 
-@bp_tpOcorrencias.route('/roda_consultar', methods=['POST'])  # /adm/setor/roda_consultar
+@bp_ocorrencias.route('/roda_consultar', methods=['POST'])  # /adm/setor/roda_consultar
 def roda_consultar():
     nme_tipo_ocorrencia = request.form['nme_tipo_ocorrencia']
 
@@ -52,12 +52,12 @@ def roda_consultar():
 
 # UPDATE
 
-@bp_tpOcorrencias.route('/atualizar')
+@bp_ocorrencias.route('/atualizar')
 def atualizar():
     return render_template('adm/ocorrencias/atualizar.html', ocorrencias=[], filtro_usado='', msg='', css_msg='')
 
 
-@bp_tpOcorrencias.route('/roda_atualizar', methods=['POST'])
+@bp_ocorrencias.route('/roda_atualizar', methods=['POST'])
 def roda_atualizar():
     nme_tipo_ocorrencia = request.form['nme_tipo_ocorrencia']
     filtro_usado = f'Descrição da Ocorrência: {nme_tipo_ocorrencia}'
@@ -66,7 +66,7 @@ def roda_atualizar():
     return render_template('adm/ocorrencias/atualizar.html', ocorrencias=ocorrencias, filtro_usado=filtro_usado, msg='', css_msg='')
 
 
-@bp_tpOcorrencias.route('/alterar/<int:idt>')
+@bp_ocorrencias.route('/alterar/<int:idt>')
 def alterar(idt):
     dao = TipoOcorrenciaDAO()
     ocorrencia = dao.read_by_idt(idt)
@@ -77,7 +77,7 @@ def alterar(idt):
     return render_template('adm/ocorrencias/alterar.html', ocorrencia=ocorrencia, msg='', css_msg='')
 
 
-@bp_tpOcorrencias.route('/salvar_alterar', methods=['POST'])
+@bp_ocorrencias.route('/salvar_alterar', methods=['POST'])
 def salvar_alterar():
     dao = TipoOcorrenciaDAO()
 
@@ -104,7 +104,7 @@ def salvar_alterar():
 
     return render_template('adm/ocorrencias/alterar.html', ocorrencia=ocorrencia, msg=msg, css_msg=css_msg)
 
-@bp_tpOcorrencias.route('/excluir/<int:idt>')
+@bp_ocorrencias.route('/excluir/<int:idt>')
 def excluir(idt):
     dao = TipoOcorrenciaDAO()
     if dao.delete(idt):
